@@ -12,6 +12,8 @@ import { fileURLToPath } from 'node:url';
 
 import subsetFont from 'subset-font';
 
+/** @typedef {import('../src/i18n/dictionary.ts').Dictionary} Dictionary */
+
 const here = path.dirname(fileURLToPath(import.meta.url));
 const out = path.resolve(here, '../src/assets/fonts');
 const source = process.env.CJK_SOURCE;
@@ -23,7 +25,10 @@ if (!source) {
 const { zhHantHK } = await import('../src/i18n/zh-Hant-HK.ts');
 const { zhHantTW } = await import('../src/i18n/zh-Hant-TW.ts');
 
-/** Strings set in the display face on the site. */
+/**
+ * Strings set in the display face on the site.
+ * @param {Dictionary} t
+ */
 function displayStrings(t) {
   return [
     t.site.name,
@@ -36,13 +41,14 @@ function displayStrings(t) {
     ...t.home.features.items.map((item) => item.title),
     ...t.home.hero.records.flatMap((record) => [record.title, record.amount, record.outcome]),
     t.home.privacy.heading,
-    t.home.languages.heading,
-    ...t.home.languages.items.map((item) => item.label),
     t.home.cta.heading,
   ];
 }
 
-/** Strings drawn on the social image, in either face. */
+/**
+ * Strings drawn on the social image, in either face.
+ * @param {Dictionary} t
+ */
 function ogStrings(t) {
   return [
     t.site.name,
@@ -54,6 +60,7 @@ function ogStrings(t) {
 
 const cjk = /[　-〿㐀-䶿一-鿿豈-﫿＀-￯]/gu;
 
+/** @param {string[]} strings */
 function cjkCharacters(strings) {
   return [...new Set(strings.join('').match(cjk) ?? [])].sort().join('');
 }

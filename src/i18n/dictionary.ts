@@ -57,16 +57,12 @@ export interface Dictionary {
     };
     screens: {
       label: string;
-      alts: { split: string; settle: string; calendar: string; homeZh: string };
+      alts: { split: string; settle: string; calendar: string };
     };
     privacy: {
       heading: string;
       body: string;
       link: string;
-    };
-    languages: {
-      heading: string;
-      items: { label: string; lang: string }[];
     };
     cta: {
       heading: string;

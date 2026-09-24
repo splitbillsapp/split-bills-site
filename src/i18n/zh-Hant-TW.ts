@@ -106,22 +106,12 @@ export const zhHantTW: Dictionary = {
         split: '百分比分帳，附滑桿與分配條',
         settle: '結清面板，已填好全額',
         calendar: '月曆檢視，每日有標記，下方是當日行程',
-        homeZh: '繁體中文首頁',
       },
     },
     privacy: {
       heading: '什麼都不會離開你的手機。',
       body: '沒有分析、沒有廣告、沒有追蹤、不讀取聯絡人。只有想備份時才需要登入。',
       link: '閱讀隱私權政策',
-    },
-    languages: {
-      heading: '四種語言',
-      items: [
-        { label: 'English', lang: 'en' },
-        { label: '简体中文', lang: 'zh-Hans' },
-        { label: '繁體中文（台灣）', lang: 'zh-Hant-TW' },
-        { label: '繁體中文（香港）', lang: 'zh-Hant-HK' },
-      ],
     },
     cta: {
       heading: '記下來。',

@@ -1,7 +1,6 @@
 ---
 import calendar from '../assets/screens/calendar.png';
 import entry from '../assets/screens/entry.png';
-import homeZh from '../assets/screens/home-zh.png';
 import person from '../assets/screens/person.png';
 import settle from '../assets/screens/settle.png';
 import split from '../assets/screens/split.png';
@@ -111,29 +110,6 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
     </div>
   </section>
 
-  <section class="container languages">
-    <div class="languages-copy">
-      <h2>{t.home.languages.heading}</h2>
-      <ul class="language-list">
-        {
-          t.home.languages.items.map((item, index) => (
-            <li class:list={['display', 'language', `language-${index + 1}`]} lang={item.lang}>
-              {item.label}
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    <PhoneFrame
-      class="languages-phone"
-      screen={homeZh}
-      alt={t.home.screens.alts.homeZh}
-      widths={[200, 260]}
-      sizes="(min-width: 60em) 260px, 200px"
-      tilt="left-slight"
-      shadow="xl"
-    />
-  </section>
 
   <section class="container cta">
     <Mark size={88} />
@@ -309,52 +285,6 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
     outline-color: var(--color-on-ink);
   }
 
-  /* Languages */
-  .languages {
-    display: grid;
-    gap: var(--space-xl);
-  }
-
-  .language-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-lg) var(--space-md);
-    padding: var(--space-xs);
-    list-style: none;
-  }
-
-  .language {
-    padding: var(--space-md);
-    background: var(--color-surface);
-    border: var(--keyline-base) solid var(--color-outline);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    font-size: 1.0625rem;
-    text-align: center;
-  }
-
-  .language-1 {
-    rotate: var(--tilt-left-slight);
-  }
-
-  .language-2 {
-    rotate: var(--tilt-right-slight);
-  }
-
-  .language-3 {
-    rotate: var(--tilt-right);
-  }
-
-  .language-4 {
-    rotate: var(--tilt-left);
-  }
-
-  .languages :global(.languages-phone) {
-    width: 200px;
-    justify-self: center;
-    margin-block: var(--space-lg);
-  }
-
   /* Closing call to action */
   .cta {
     display: flex;
@@ -381,8 +311,7 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
       justify-self: end;
     }
 
-    .ways,
-    .languages {
+    .ways {
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
       gap: var(--space-section);
@@ -390,11 +319,6 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
 
     .ways :global(.ways-phone) {
       width: 280px;
-      margin-block: 0;
-    }
-
-    .languages :global(.languages-phone) {
-      width: 260px;
       margin-block: 0;
     }
 
@@ -409,10 +333,6 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
 
     .privacy {
       padding: var(--space-xxl) calc(var(--space-xxl) + var(--space-sm));
-    }
-
-    .language-list {
-      grid-template-columns: repeat(2, minmax(0, 14rem));
     }
   }
 </style>

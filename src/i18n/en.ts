@@ -104,22 +104,12 @@ export const en: Dictionary = {
         split: 'Percentage split with sliders and an allocation bar',
         settle: 'The settle-up sheet with the full amount pre-filled',
         calendar: 'Calendar month with per-day markers and a day agenda',
-        homeZh: 'The home screen in Traditional Chinese',
       },
     },
     privacy: {
       heading: 'Nothing leaves your phone.',
       body: 'No analytics, no ads, no tracking, no contact access. Sign in only if you want a backup.',
       link: 'Read the privacy policy',
-    },
-    languages: {
-      heading: 'Four languages',
-      items: [
-        { label: 'English', lang: 'en' },
-        { label: '简体中文', lang: 'zh-Hans' },
-        { label: '繁體中文（台灣）', lang: 'zh-Hant-TW' },
-        { label: '繁體中文（香港）', lang: 'zh-Hant-HK' },
-      ],
     },
     cta: {
       heading: 'Write it down.',
