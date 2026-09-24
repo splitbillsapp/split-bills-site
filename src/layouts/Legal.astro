@@ -1,0 +1,53 @@
+---
+import { getEntry, render } from 'astro:content';
+
+import Site from './Site.astro';
+import { currentLocale, dictionary } from '../i18n';
+import { defaultLocale } from '../i18n/locales';
+
+interface Props {
+  entry: 'privacy-policy' | 'delete-account';
+  page: 'privacy' | 'delete-account';
+  description: string;
+}
+
+const { entry: id, page, description } = Astro.props;
+const entry = await getEntry('legal', id);
+if (!entry) {
+  throw new Error(`Legal text "${id}" is missing from src/content/legal. Run npm run legal:sync.`);
+}
+
+const heading = entry.body?.match(/^#\s+(.+)$/m)?.[1];
+if (!heading) {
+  throw new Error(`Legal text "${id}" has no top-level heading.`);
+}
+
+const { Content } = await render(entry);
+const locale = currentLocale(Astro.currentLocale);
+const t = dictionary(locale.code);
+---
+
+<Site title={heading} description={description} page={page} availableIn={[defaultLocale]}>
+  <div class="container">
+    {locale.code !== defaultLocale && <p class="note" lang={locale.code}>{t.legal.englishOnly}</p>}
+    <article class="prose" lang={defaultLocale}>
+      <Content />
+    </article>
+  </div>
+</Site>
+
+<style>
+  .container {
+    padding-block: var(--space-xxl) 0;
+  }
+
+  .note {
+    max-width: var(--measure);
+    margin-block-end: var(--space-xl);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--color-surface-muted);
+    border: var(--keyline-base) dashed var(--color-disabled-outline);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+  }
+</style>
