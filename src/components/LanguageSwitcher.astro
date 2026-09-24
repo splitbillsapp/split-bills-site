@@ -47,6 +47,40 @@ const others = localesFor('home').filter((locale) => locale.code !== current.cod
   )
 }
 
+<script>
+  // The details element has no light dismiss of its own; this closes an open
+  // switcher on an outside click or Escape, and keeps only one open at a time.
+  // Without JavaScript the control still opens and closes from its summary.
+  const openSwitchers = () =>
+    document.querySelectorAll<HTMLDetailsElement>('details.switcher[open]');
+
+  document.addEventListener('click', (event) => {
+    for (const details of openSwitchers()) {
+      if (!details.contains(event.target as Node)) details.open = false;
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const details of openSwitchers()) {
+      details.open = false;
+      details.querySelector('summary')?.focus();
+    }
+  });
+
+  document.addEventListener(
+    'toggle',
+    (event) => {
+      const opened = event.target as HTMLDetailsElement;
+      if (!opened.matches('details.switcher') || !opened.open) return;
+      for (const details of openSwitchers()) {
+        if (details !== opened) details.open = false;
+      }
+    },
+    true,
+  );
+</script>
+
 <style>
   .switcher {
     position: relative;
