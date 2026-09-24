@@ -11,7 +11,8 @@
     "check": "astro check && tsc --noEmit -p tsconfig.scripts.json",
     "lint": "eslint . --quiet",
     "legal:sync": "node scripts/legal-sync.mjs",
-    "legal:check": "node scripts/legal-sync.mjs --check"
+    "legal:check": "node scripts/legal-sync.mjs --check",
+    "fonts:cjk": "node scripts/subset-cjk.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -28,6 +29,7 @@
     "eslint": "^9.39.5",
     "eslint-plugin-astro": "^1.7.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "subset-font": "^2.9.0",
     "svgo": "^4.1.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.1"

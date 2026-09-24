@@ -5,6 +5,28 @@ import { defaultLocale, locales } from './src/i18n/locales';
 
 const fontDir = './src/assets/fonts';
 
+// Chinese glyphs for the display face: Noto subsets limited to CJK code points, so Latin
+// text and figures still come from Bricolage when both are in the stack.
+function cjkDisplay(id: 'hk' | 'tc') {
+  const variant = {
+    src: [`${fontDir}/noto-sans-${id}-display.woff2`] as [string],
+    weight: 800,
+    style: 'normal' as const,
+    display: 'swap' as const,
+    unicodeRange: ['U+3000-303F', 'U+3400-4DBF', 'U+4E00-9FFF', 'U+F900-FAFF', 'U+FF00-FFEF'] as [
+      string,
+      ...string[],
+    ],
+  };
+  return {
+    provider: fontProviders.local(),
+    name: `Noto Sans ${id.toUpperCase()} Display`,
+    cssVariable: `--font-display-${id}`,
+    fallbacks: [],
+    options: { variants: [variant] as [typeof variant] },
+  };
+}
+
 function figtree(weight: 400 | 500 | 700) {
   return {
     src: [`${fontDir}/figtree-latin-${weight}-normal.woff2`] as [string],
@@ -65,5 +87,7 @@ export default defineConfig({
         ],
       },
     },
+    cjkDisplay('hk'),
+    cjkDisplay('tc'),
   ],
 });

@@ -4,7 +4,7 @@ import { Resvg } from '@resvg/resvg-js';
 import satori from 'satori';
 
 import { dictionary } from '../i18n';
-import type { LocaleCode } from '../i18n/locales';
+import { localeFromCode, type LocaleCode } from '../i18n/locales';
 
 export const ogSize = { width: 1200, height: 630 } as const;
 
@@ -29,6 +29,7 @@ function pill(text: string, fill: string, rotate: string) {
         boxShadow: `5px 5px 0 ${ink}`,
         background: fill,
         fontFamily: 'Bricolage Grotesque',
+        fontWeight: 800,
         fontSize: 22,
         lineHeight: 1.2,
         transform: `rotate(${rotate})`,
@@ -40,10 +41,13 @@ function pill(text: string, fill: string, rotate: string) {
 
 export async function renderOgImage(locale: LocaleCode): Promise<Uint8Array<ArrayBuffer>> {
   const t = dictionary(locale);
-  const [display, body, icon] = await Promise.all([
+  const cjk = localeFromCode(locale).cjk;
+  const [display, body, icon, cjkDisplay, cjkBody] = await Promise.all([
     readFile(fontFiles.display),
     readFile(fontFiles.body),
     readFile('src/assets/icon-512.png'),
+    cjk ? readFile(`src/assets/fonts/og/noto-sans-${cjk}-800.ttf`) : null,
+    cjk ? readFile(`src/assets/fonts/og/noto-sans-${cjk}-400.ttf`) : null,
   ]);
   const records = t.home.hero.records;
   const owed = records.find((record) => record.direction === 'owedToYou');
@@ -81,7 +85,7 @@ export async function renderOgImage(locale: LocaleCode): Promise<Uint8Array<Arra
                 {
                   type: 'div',
                   props: {
-                    style: { fontFamily: 'Bricolage Grotesque', fontSize: 26 },
+                    style: { fontFamily: 'Bricolage Grotesque', fontWeight: 800, fontSize: 26 },
                     children: t.site.name,
                   },
                 },
@@ -90,9 +94,10 @@ export async function renderOgImage(locale: LocaleCode): Promise<Uint8Array<Arra
                   props: {
                     style: {
                       fontFamily: 'Bricolage Grotesque',
-                      fontSize: 84,
-                      lineHeight: 0.94,
-                      letterSpacing: -3.2,
+                      fontWeight: 800,
+                      fontSize: cjk ? 76 : 84,
+                      lineHeight: cjk ? 1.15 : 0.94,
+                      letterSpacing: cjk ? 0 : -3.2,
                     },
                     children: t.site.tagline,
                   },
@@ -122,9 +127,12 @@ export async function renderOgImage(locale: LocaleCode): Promise<Uint8Array<Arra
     },
     {
       ...ogSize,
+      // Satori falls back per glyph through this list, so the Noto subsets only draw the CJK.
       fonts: [
         { name: 'Bricolage Grotesque', data: display, weight: 800, style: 'normal' },
         { name: 'Figtree', data: body, weight: 400, style: 'normal' },
+        ...(cjkDisplay ? [{ name: 'Noto Sans CJK', data: cjkDisplay, weight: 800 as const, style: 'normal' as const }] : []),
+        ...(cjkBody ? [{ name: 'Noto Sans CJK', data: cjkBody, weight: 400 as const, style: 'normal' as const }] : []),
       ],
     },
   );

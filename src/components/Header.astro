@@ -52,6 +52,7 @@ const t = dictionary(locale.code);
   .name {
     font-size: 1.25rem;
     line-height: 1;
+    white-space: nowrap;
   }
 
   .nav {
@@ -67,19 +68,25 @@ const t = dictionary(locale.code);
     padding-inline: var(--space-xs);
     font-weight: 500;
     text-decoration: none;
+    white-space: nowrap;
   }
 
   .link:hover {
     text-decoration: underline;
   }
 
-  @media (max-width: 24em) {
+  @media (max-width: 26em) {
     .name {
       font-size: 1.125rem;
     }
 
     .nav {
       gap: var(--space-sm);
+    }
+
+    /* Chinese labels are wider stickers; the mark alone carries the brand on a narrow phone. */
+    :lang(zh) .name {
+      display: none;
     }
   }
 </style>

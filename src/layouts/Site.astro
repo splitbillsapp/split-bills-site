@@ -22,7 +22,7 @@ const site = Astro.site ?? new URL('https://splitbillsapp.com');
 
 const alternates = localesFor(page);
 const canonical = new URL(pageHref(page, locale), site);
-const ogImage = new URL('/og.png', site);
+const ogImage = new URL(`${pageHref('home', locale)}og.png`, site);
 ---
 
 <!doctype html>
@@ -67,6 +67,8 @@ const ogImage = new URL('/og.png', site);
     <link rel="sitemap" href="/sitemap-index.xml" />
     <Font cssVariable="--font-display" preload />
     <Font cssVariable="--font-body" preload={[{ weight: '400' }]} />
+    {locale.cjk === 'hk' && <Font cssVariable="--font-display-hk" preload />}
+    {locale.cjk === 'tc' && <Font cssVariable="--font-display-tc" preload />}
   </head>
   <body>
     <a class="skip" href="#content">{t.nav.skipToContent}</a>

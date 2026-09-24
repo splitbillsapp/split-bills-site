@@ -66,11 +66,27 @@ the English dictionary and `src/i18n/dictionary.ts` is the shape every locale mu
 `pageHref`, which falls back to a locale that has the page, so a Chinese page links to the
 English legal text rather than a missing translation.
 
-To add a locale: write its dictionary, register it in `src/i18n/index.ts`, set `live: true`. Its
-home page is then built under its path (`/zh-hk/`), the language switcher appears in the header
-and footer, every page carries `hreflang` alternates, and the sitemap lists them. The build ends
-with `scripts/check-links.mjs`, which fails on any internal link with no file behind it.
-The legal pages stay English until translated sources exist in the app repo.
+Three locales are live: English at the root, 繁體中文（香港） under `/zh-hk/` and 繁體中文（台灣）
+under `/zh-tw/`. The two Chinese dictionaries were written separately, not converted from one
+another, and are marked as drafts pending native review. To add a locale: write its dictionary,
+register it in `src/i18n/index.ts`, set `live: true`. Its home page and social image are then
+built under its path, the language switcher appears in the header and footer, every page carries
+`hreflang` alternates, and the sitemap lists them. The build ends with `scripts/check-links.mjs`,
+which fails on any internal link with no file behind it. The legal pages stay English until
+translated sources exist in the app repo; Chinese pages link to them.
+
+### Chinese display type
+
+Bricolage Grotesque has no Chinese glyphs and the system faces have no black weight, so Chinese
+headings, figures and pills draw their CJK glyphs from Noto Sans HK / TC subsets that hold only
+the characters the dictionaries use (about 16 KB each), limited to CJK code points so Latin and
+figures still come from Bricolage. The subsets in `src/assets/fonts` and `src/assets/fonts/og`
+are committed. Regenerate them after changing Chinese copy:
+
+```sh
+# Source fonts: NotoSansHK[wght].ttf and NotoSansTC[wght].ttf from github.com/google/fonts (ofl/)
+CJK_SOURCE=~/Downloads/noto npm run fonts:cjk
+```
 
 ## Store badge
 

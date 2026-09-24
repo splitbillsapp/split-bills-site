@@ -65,12 +65,28 @@ h3 {
   font-size: var(--text-h3);
 }
 
-/* Chinese has no ExtraBold fallback and no letterforms that want tightening. */
+/*
+ * Chinese display type: the Noto subset is limited to CJK code points, so it draws only
+ * the Chinese glyphs and Bricolage keeps the Latin and the figures. No tightening: the
+ * letterforms are square.
+ */
+:lang(zh-Hant-HK) :is(h1, h2, h3, .display, .money) {
+  font-family: var(--font-display-hk), var(--font-display);
+}
+
+:lang(zh-Hant-TW) :is(h1, h2, h3, .display, .money) {
+  font-family: var(--font-display-tc), var(--font-display);
+}
+
 :lang(zh) h1,
 :lang(zh) h2,
 :lang(zh) h3,
 :lang(zh) .display {
   letter-spacing: 0;
+}
+
+:lang(zh) h1 {
+  line-height: 1.12;
 }
 
 :lang(zh) {
