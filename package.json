@@ -1,0 +1,35 @@
+{
+  "name": "split-bills-site",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "The public site for the Split Bills app: splitbillsapp.com",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run legal:check && astro build",
+    "preview": "astro preview",
+    "check": "astro check && tsc --noEmit -p tsconfig.scripts.json",
+    "lint": "eslint . --quiet",
+    "legal:sync": "node scripts/legal-sync.mjs",
+    "legal:check": "node scripts/legal-sync.mjs --check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/bricolage-grotesque": "^5.3.0",
+    "@fontsource/figtree": "^5.3.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "astro": "^7.3.4",
+    "satori": "^0.33.5",
+    "sharp": "^0.35.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.6.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-astro": "^1.7.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "svgo": "^4.1.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.1"
+  }
+}
