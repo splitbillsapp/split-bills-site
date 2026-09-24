@@ -1,9 +1,77 @@
-# split-bills-site
+# splitbillsapp.com
 
-The public pages Google Play requires of the Split Bills app: the privacy policy and the account
-deletion instructions. Served by GitHub Pages from `main`.
+The public site for [Split Bills](https://github.com/splitbillsapp/split-bills): a promotional
+home page, the privacy policy and the account-deletion instructions that the Google Play listing
+and the app link to. Built with Astro to static files and served by GitHub Pages at the custom
+domain `splitbillsapp.com`.
 
-- https://splitbillsapp.github.io/split-bills-site/privacy
-- https://splitbillsapp.github.io/split-bills-site/delete-account
+## Run
 
-The source of the text is `docs/legal/` in splitbillsapp/split-bills; edit there first, then mirror here.
+```sh
+npm ci
+npm run dev        # http://localhost:4321
+npm run build      # checks the legal text, then writes the site to dist/
+npm run preview    # serves dist/
+npm run check      # astro check + tsc on scripts
+npm run lint       # eslint, including the astro a11y rules
+```
+
+## Deploy
+
+Pushing to `main` runs `.github/workflows/deploy.yml`, which checks, lints, builds and publishes
+`dist/` to GitHub Pages. The first run switches the Pages source from the branch root to Actions
+(`configure-pages` with `enablement: true`). `public/CNAME` and `public/.nojekyll` are copied into
+`dist/` as-is; do not remove them.
+
+## The legal text
+
+`/privacy` and `/delete-account` render `src/content/legal/privacy-policy.md` and
+`src/content/legal/delete-account.md`. Those are verbatim copies of `docs/legal/` in the app repo,
+which is the source of truth. Edit there, then:
+
+```sh
+npm run legal:sync    # copies from ../split-bills/docs/legal (or $LEGAL_SOURCE)
+```
+
+`npm run build` runs `legal:check` first and fails if the copies have drifted from the source.
+Without the app repo alongside, as in CI, the check has nothing to compare against and skips.
+Both URLs must keep working, with and without a trailing slash: they are printed in the Play
+listing.
+
+The markdown is rendered without typographic quote substitution so the text stays byte-for-byte
+the same as the source.
+
+## Design
+
+The brand is the app's sticker book, documented in `docs/DESIGN.md` of the app repo.
+`src/styles/tokens.css` mirrors `src/ui/theme.ts` there token for token; change a colour in the
+app first. Fonts are self-hosted from the Fontsource packages (`src/assets/fonts`) through Astro's
+fonts API, which also generates the size-adjusted fallbacks. The site makes no third-party
+requests and sets no cookies.
+
+Screenshots in `src/assets/screens` are copies of `docs/screenshots` in the app repo. The header
+mark and favicons are rasterised from `assets/icon-source/icon.svg` there:
+
+```sh
+rsvg-convert -w 512 -h 512 -o src/assets/icon-512.png ../split-bills/assets/icon-source/icon.svg
+```
+
+The social image at `/og.png` is generated at build time by `src/og/render.ts`.
+
+## Languages
+
+`src/i18n/locales.ts` lists the locales with a URL path and a `live` flag. `src/i18n/en.ts` is
+the English dictionary and `src/i18n/dictionary.ts` is the shape every locale must fill. To add
+a locale: write its dictionary, register it in `src/i18n/index.ts`, set `live: true`. Its home
+page is then built under its path (`/zh-hk/`), the language switcher appears in the header, and
+every page carries `hreflang` alternates. The legal pages stay English until translated sources
+exist in the app repo.
+
+## Store badge
+
+`src/site.ts` holds `playStoreUrl`. While it is undefined the badge reads "Coming to Google
+Play", dashed and shadowless. Set it and the badge becomes a link.
+
+## Contact
+
+Andrew Sze-To · support@splitbillsapp.com
