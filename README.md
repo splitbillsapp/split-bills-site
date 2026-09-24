@@ -61,11 +61,16 @@ The social image at `/og.png` is generated at build time by `src/og/render.ts`.
 ## Languages
 
 `src/i18n/locales.ts` lists the locales with a URL path and a `live` flag. `src/i18n/en.ts` is
-the English dictionary and `src/i18n/dictionary.ts` is the shape every locale must fill. To add
-a locale: write its dictionary, register it in `src/i18n/index.ts`, set `live: true`. Its home
-page is then built under its path (`/zh-hk/`), the language switcher appears in the header, and
-every page carries `hreflang` alternates. The legal pages stay English until translated sources
-exist in the app repo.
+the English dictionary and `src/i18n/dictionary.ts` is the shape every locale must fill.
+`src/i18n/pages.ts` lists the pages and which locales each exists in; every link goes through
+`pageHref`, which falls back to a locale that has the page, so a Chinese page links to the
+English legal text rather than a missing translation.
+
+To add a locale: write its dictionary, register it in `src/i18n/index.ts`, set `live: true`. Its
+home page is then built under its path (`/zh-hk/`), the language switcher appears in the header
+and footer, every page carries `hreflang` alternates, and the sitemap lists them. The build ends
+with `scripts/check-links.mjs`, which fails on any internal link with no file behind it.
+The legal pages stay English until translated sources exist in the app repo.
 
 ## Store badge
 

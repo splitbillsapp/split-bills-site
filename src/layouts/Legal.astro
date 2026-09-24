@@ -2,12 +2,12 @@
 import { getEntry, render } from 'astro:content';
 
 import Site from './Site.astro';
-import { currentLocale, dictionary } from '../i18n';
+import { currentLocale, dictionary, type PageId } from '../i18n';
 import { defaultLocale } from '../i18n/locales';
 
 interface Props {
   entry: 'privacy-policy' | 'delete-account';
-  page: 'privacy' | 'delete-account';
+  page: Extract<PageId, 'privacy' | 'deleteAccount'>;
   description: string;
 }
 
@@ -27,7 +27,7 @@ const locale = currentLocale(Astro.currentLocale);
 const t = dictionary(locale.code);
 ---
 
-<Site title={heading} description={description} page={page} availableIn={[defaultLocale]}>
+<Site title={heading} description={description} page={page}>
   <div class="container">
     {locale.code !== defaultLocale && <p class="note" lang={locale.code}>{t.legal.englishOnly}</p>}
     <article class="prose" lang={defaultLocale}>

@@ -11,7 +11,7 @@ import PhoneFrame from './PhoneFrame.astro';
 import RecordSticker from './RecordSticker.astro';
 import StoreBadge from './StoreBadge.astro';
 import Site from '../layouts/Site.astro';
-import { dictionary, localizedPath } from '../i18n';
+import { dictionary, pageHref } from '../i18n';
 import type { Locale } from '../i18n/locales';
 
 interface Props {
@@ -23,7 +23,7 @@ const t = dictionary(locale.code);
 const stripSizes = '(min-width: 60em) 240px, 30vw';
 ---
 
-<Site title={`${t.site.name}: ${t.site.tagline}`} description={t.site.description} page="">
+<Site title={`${t.site.name}: ${t.site.tagline}`} description={t.site.description} page="home">
   <section class="container hero">
     <div class="hero-copy">
       <h1>{t.site.tagline}</h1>
@@ -107,7 +107,7 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
     <div class="privacy">
       <h2>{t.home.privacy.heading}</h2>
       <p>{t.home.privacy.body}</p>
-      <a href={localizedPath(locale, 'privacy')}>{t.home.privacy.link}</a>
+      <a href={pageHref('privacy', locale)}>{t.home.privacy.link}</a>
     </div>
   </section>
 
@@ -224,14 +224,13 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
     animation-delay: 520ms;
   }
 
+  /* Movement only: an opacity ramp leaves the text below AA contrast while it runs. */
   @keyframes land {
     from {
-      opacity: 0;
       translate: 0 -28px;
     }
 
     to {
-      opacity: 1;
       translate: 0 0;
     }
   }

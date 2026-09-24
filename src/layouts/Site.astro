@@ -3,33 +3,26 @@ import { Font } from 'astro:assets';
 
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { currentLocale, dictionary, localizedPath } from '../i18n';
-import { liveLocales } from '../i18n/locales';
+import { currentLocale, dictionary, localesFor, pageHref, type PageId } from '../i18n';
 import { ogSize } from '../og/render';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
-  /** Path of this page with no locale prefix, e.g. 'privacy'. */
-  page: string;
-  /** Locales in which this page exists; defaults to every live locale. */
-  availableIn?: readonly string[];
+  page: PageId;
   /** For pages served at arbitrary URLs, like the 404: no canonical, not indexed. */
   noindex?: boolean;
 }
 
-const { title, description, page, availableIn, noindex = false } = Astro.props;
+const { title, description, page, noindex = false } = Astro.props;
 const locale = currentLocale(Astro.currentLocale);
 const t = dictionary(locale.code);
 const site = Astro.site ?? new URL('https://splitbillsapp.com');
 
-const alternates = liveLocales().filter(
-  (candidate) => availableIn === undefined || availableIn.includes(candidate.code),
-);
-const canonical = new URL(localizedPath(locale, page), site);
+const alternates = localesFor(page);
+const canonical = new URL(pageHref(page, locale), site);
 const ogImage = new URL('/og.png', site);
-const defaultUrl = new URL(localizedPath(alternates[0] ?? locale, page), site);
 ---
 
 <!doctype html>
@@ -42,16 +35,21 @@ const defaultUrl = new URL(localizedPath(alternates[0] ?? locale, page), site);
     <meta name="theme-color" content="#f7f0d9" />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     {
-      alternates.length > 1 &&
+      !noindex &&
+        alternates.length > 1 &&
         alternates.map((alternate) => (
           <link
             rel="alternate"
             hreflang={alternate.code}
-            href={new URL(localizedPath(alternate, page), site)}
+            href={new URL(pageHref(page, alternate), site)}
           />
         ))
     }
-    {alternates.length > 1 && <link rel="alternate" hreflang="x-default" href={defaultUrl} />}
+    {
+      !noindex && alternates.length > 1 && (
+        <link rel="alternate" hreflang="x-default" href={new URL(pageHref(page, alternates[0]!), site)} />
+      )
+    }
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={t.site.name} />
     <meta property="og:title" content={title} />
@@ -72,11 +70,11 @@ const defaultUrl = new URL(localizedPath(alternates[0] ?? locale, page), site);
   </head>
   <body>
     <a class="skip" href="#content">{t.nav.skipToContent}</a>
-    <Header locale={locale} page={page} availableIn={alternates} />
+    <Header locale={locale} page={page} />
     <main id="content" tabindex="-1">
       <slot />
     </main>
-    <Footer locale={locale} />
+    <Footer locale={locale} page={page} />
   </body>
 </html>
 

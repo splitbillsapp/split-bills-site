@@ -12,14 +12,9 @@ export function fill(template: string, values: Record<string, string>): string {
   return template.replace(/\{(\w+)\}/g, (match, key: string) => values[key] ?? match);
 }
 
-/** Root-relative URL for `pathname` in `locale`, always with a trailing slash. */
-export function localizedPath(locale: Locale, pathname = ''): string {
-  const prefix = locale.code === defaultLocale ? '' : `/${locale.path}`;
-  const path = pathname.replace(/^\/+|\/+$/g, '');
-  return `${prefix}/${path}${path ? '/' : ''}`;
-}
-
 /** The current locale of an Astro page, resolved to the default when unknown. */
 export function currentLocale(code: string | undefined): Locale {
   return localeFromCode(code);
 }
+
+export { pageHref, pages, localesFor, pageExistsIn, type PageId } from './pages';

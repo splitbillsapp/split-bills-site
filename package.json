@@ -6,7 +6,7 @@
   "description": "The public site for the Split Bills app: splitbillsapp.com",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run legal:check && astro build",
+    "build": "npm run legal:check && astro build && node scripts/check-links.mjs",
     "preview": "astro preview",
     "check": "astro check && tsc --noEmit -p tsconfig.scripts.json",
     "lint": "eslint . --quiet",

@@ -21,7 +21,15 @@ export default defineConfig({
   build: { format: 'directory', inlineStylesheets: 'always' },
   // The legal text must render verbatim; typographic quote substitution would alter it.
   markdown: { smartypants: false },
-  integrations: [sitemap({ filter: (page) => !page.endsWith('/404/') })],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.endsWith('/404/'),
+      i18n: {
+        defaultLocale,
+        locales: Object.fromEntries(locales.map((locale) => [locale.path, locale.code])),
+      },
+    }),
+  ],
   i18n: {
     defaultLocale,
     locales: locales.map((locale) => ({ codes: [locale.code], path: locale.path })),

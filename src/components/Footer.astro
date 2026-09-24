@@ -1,22 +1,45 @@
 ---
-import { dictionary, fill, localizedPath } from '../i18n';
+import { dictionary, fill, localesFor, pageHref, type PageId } from '../i18n';
 import type { Locale } from '../i18n/locales';
 
 interface Props {
   locale: Locale;
+  page: PageId;
 }
 
-const { locale } = Astro.props;
+const { locale, page } = Astro.props;
 const t = dictionary(locale.code);
+const languages = localesFor('home');
 ---
 
 <footer class="footer">
   <div class="container inner">
     <ul class="links">
-      <li><a href={localizedPath(locale, 'privacy')}>{t.footer.privacy}</a></li>
-      <li><a href={localizedPath(locale, 'delete-account')}>{t.footer.deleteAccount}</a></li>
+      <li><a href={pageHref('privacy', locale)}>{t.footer.privacy}</a></li>
+      <li><a href={pageHref('deleteAccount', locale)}>{t.footer.deleteAccount}</a></li>
       <li><a href={`mailto:${t.site.supportEmail}`}>{t.site.supportEmail}</a></li>
     </ul>
+    {
+      languages.length > 1 && (
+        <nav class="languages" aria-label={t.nav.language}>
+          <ul class="language-list">
+            {languages.map((candidate) => (
+              <li>
+                <a
+                  class:list={['language', 'sticker-press', { current: candidate.code === locale.code }]}
+                  href={pageHref(page, candidate)}
+                  lang={candidate.code}
+                  hreflang={candidate.code}
+                  aria-current={candidate.code === locale.code ? 'page' : undefined}
+                >
+                  {candidate.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
     <p class="made">{fill(t.footer.madeBy, { developer: t.site.developer })}</p>
   </div>
 </footer>
@@ -54,6 +77,36 @@ const t = dictionary(locale.code);
 
   .links a:hover {
     text-decoration: underline;
+  }
+
+  .language-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    padding: var(--space-xs) 0;
+    list-style: none;
+  }
+
+  .language {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-lg);
+    background: var(--color-surface);
+    border: var(--keyline-base) solid var(--color-outline);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .current {
+    background: var(--color-text);
+    color: var(--color-on-ink);
+    box-shadow: none;
+    transform: translate(var(--press-offset), var(--press-offset));
   }
 
   .made {

@@ -1,6 +1,6 @@
 ---
 import Site from '../layouts/Site.astro';
-import { dictionary, localizedPath } from '../i18n';
+import { dictionary, pageHref } from '../i18n';
 import { defaultLocale, localeFromCode } from '../i18n/locales';
 
 const locale = localeFromCode(defaultLocale);
@@ -10,8 +10,7 @@ const t = dictionary(locale.code);
 <Site
   title={`${t.notFound.heading} ${t.site.name}`}
   description={t.notFound.body}
-  page="404"
-  availableIn={[]}
+  page="home"
   noindex
 >
   <section class="container lost">
@@ -19,9 +18,9 @@ const t = dictionary(locale.code);
     <h1>{t.notFound.heading}</h1>
     <p>{t.notFound.body}</p>
     <div class="actions">
-      <a class="button sticker-press" href={localizedPath(locale)}>{t.notFound.home}</a>
-      <a class="link" href={localizedPath(locale, 'privacy')}>{t.footer.privacy}</a>
-      <a class="link" href={localizedPath(locale, 'delete-account')}>{t.footer.deleteAccount}</a>
+      <a class="button sticker-press" href={pageHref('home', locale)}>{t.notFound.home}</a>
+      <a class="link" href={pageHref('privacy', locale)}>{t.footer.privacy}</a>
+      <a class="link" href={pageHref('deleteAccount', locale)}>{t.footer.deleteAccount}</a>
     </div>
   </section>
 </Site>

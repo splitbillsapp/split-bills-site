@@ -1,28 +1,27 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import Mark from './Mark.astro';
-import { dictionary, localizedPath } from '../i18n';
+import { dictionary, pageHref, type PageId } from '../i18n';
 import type { Locale } from '../i18n/locales';
 
 interface Props {
   locale: Locale;
-  page: string;
-  availableIn: readonly Locale[];
+  page: PageId;
 }
 
-const { locale, page, availableIn } = Astro.props;
+const { locale, page } = Astro.props;
 const t = dictionary(locale.code);
 ---
 
 <header class="header">
   <div class="container bar">
-    <a class="home" href={localizedPath(locale)} aria-label={`${t.site.name}: ${t.nav.home}`}>
+    <a class="home" href={pageHref('home', locale)} aria-label={`${t.site.name}: ${t.nav.home}`}>
       <Mark size={40} />
       <span class="display name">{t.site.name}</span>
     </a>
     <nav class="nav" aria-label={t.site.name}>
-      <a class="link" href={localizedPath(locale, 'privacy')}>{t.nav.privacy}</a>
-      <LanguageSwitcher current={locale} page={page} availableIn={availableIn} />
+      <a class="link" href={pageHref('privacy', locale)}>{t.nav.privacy}</a>
+      <LanguageSwitcher current={locale} page={page} />
     </nav>
   </div>
 </header>
@@ -37,7 +36,7 @@ const t = dictionary(locale.code);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     min-height: 68px;
     padding-block: var(--space-sm);
   }
@@ -58,7 +57,7 @@ const t = dictionary(locale.code);
   .nav {
     display: flex;
     align-items: center;
-    gap: var(--space-lg);
+    gap: var(--space-md);
   }
 
   .link {
@@ -72,5 +71,15 @@ const t = dictionary(locale.code);
 
   .link:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 24em) {
+    .name {
+      font-size: 1.125rem;
+    }
+
+    .nav {
+      gap: var(--space-sm);
+    }
   }
 </style>
