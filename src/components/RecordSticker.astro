@@ -1,0 +1,87 @@
+---
+import type { Direction } from '../i18n/dictionary';
+
+interface Props {
+  title: string;
+  amount: string;
+  outcome: string;
+  direction: Direction;
+  class?: string;
+}
+
+const { title, amount, outcome, direction, class: className } = Astro.props;
+---
+
+<li class:list={['record', className]}>
+  <div class="row">
+    <span class="title">{title}</span>
+    <span class="money amount">{amount}</span>
+  </div>
+  <span class:list={['money', 'pill', direction]}>{outcome}</span>
+</li>
+
+<style>
+  .record {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: 10px 12px;
+    background: var(--color-surface);
+    border: var(--keyline-base) solid var(--color-outline);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2px var(--space-sm);
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    line-height: 1.25;
+  }
+
+  .amount {
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .pill {
+    align-self: flex-start;
+    padding: 5px 11px;
+    border: var(--keyline-base) solid var(--color-outline);
+    border-radius: 12px;
+    font-size: 0.875rem;
+    line-height: 1.25;
+  }
+
+  .owedToYou {
+    background: var(--color-positive-soft);
+  }
+
+  .youOwe {
+    background: var(--color-negative-soft);
+  }
+
+  @media (min-width: 60em) {
+    .record {
+      gap: 10px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .title {
+      font-size: 1.0625rem;
+    }
+
+    .amount,
+    .pill {
+      font-size: 1rem;
+    }
+  }
+</style>

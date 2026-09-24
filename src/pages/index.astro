@@ -1,0 +1,6 @@
+---
+import Home from '../components/Home.astro';
+import { localeFromCode, defaultLocale } from '../i18n/locales';
+---
+
+<Home locale={localeFromCode(defaultLocale)} />

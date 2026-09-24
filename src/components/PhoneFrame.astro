@@ -1,0 +1,79 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  screen: ImageMetadata;
+  alt: string;
+  /** Rendered widths to emit, in CSS px; the largest is doubled for dense screens. */
+  widths: number[];
+  sizes: string;
+  tilt?: 'left' | 'left-slight' | 'right' | 'right-slight' | 'none';
+  shadow?: 'md' | 'xl' | 'hero';
+  radius?: 'lg' | 'hero';
+  loading?: 'eager' | 'lazy';
+  class?: string;
+}
+
+const {
+  screen,
+  alt,
+  widths,
+  sizes,
+  tilt = 'none',
+  shadow = 'hero',
+  radius = 'hero',
+  loading = 'lazy',
+  class: className,
+} = Astro.props;
+
+const largest = Math.max(...widths);
+const emitted = [...new Set([...widths, largest * 2])].sort((a, b) => a - b);
+---
+
+<div
+  class:list={['frame', className, `tilt-${tilt}`]}
+  style={`--frame-shadow: var(--shadow-${shadow}); --frame-radius: var(--radius-${radius})`}
+>
+  <Picture
+    src={screen}
+    alt={alt}
+    widths={emitted}
+    sizes={sizes}
+    formats={['avif', 'webp']}
+    loading={loading}
+    decoding={loading === 'eager' ? 'sync' : 'async'}
+    fetchpriority={loading === 'eager' ? 'high' : 'auto'}
+  />
+</div>
+
+<style>
+  .frame {
+    overflow: hidden;
+    background: var(--color-surface);
+    border: var(--keyline-hero) solid var(--color-outline);
+    border-radius: var(--frame-radius);
+    box-shadow: var(--frame-shadow);
+  }
+
+  .frame :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  .tilt-left {
+    rotate: var(--tilt-left);
+  }
+
+  .tilt-left-slight {
+    rotate: var(--tilt-left-slight);
+  }
+
+  .tilt-right {
+    rotate: var(--tilt-right);
+  }
+
+  .tilt-right-slight {
+    rotate: var(--tilt-right-slight);
+  }
+</style>

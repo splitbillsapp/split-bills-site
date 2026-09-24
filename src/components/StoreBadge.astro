@@ -1,0 +1,65 @@
+---
+import { dictionary } from '../i18n';
+import type { LocaleCode } from '../i18n/locales';
+import { playStoreUrl } from '../site';
+
+interface Props {
+  locale: LocaleCode;
+  size?: 'md' | 'lg';
+}
+
+const { locale, size = 'md' } = Astro.props;
+const t = dictionary(locale);
+---
+
+{
+  playStoreUrl ? (
+    <a class:list={['badge', 'live', 'sticker-press', size]} href={playStoreUrl}>
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path d="M5 3.5v17l14-8.5z" />
+      </svg>
+      {t.store.getIt}
+    </a>
+  ) : (
+    <span class:list={['badge', 'soon', size]}>{t.store.comingSoon}</span>
+  )
+}
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    min-height: 48px;
+    padding: 0 var(--space-xl);
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-body);
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  .lg {
+    min-height: 54px;
+    font-size: 1.125rem;
+  }
+
+  .live {
+    background: var(--color-surface);
+    border: var(--keyline-base) solid var(--color-outline);
+    box-shadow: var(--shadow-md);
+  }
+
+  .live svg {
+    fill: var(--color-outline);
+  }
+
+  .soon {
+    background: var(--color-disabled-fill);
+    border: var(--keyline-base) dashed var(--color-disabled-outline);
+    /* Muted ink rather than disabled text: this is a statement to read, not an inactive control. */
+    color: var(--color-text-muted);
+  }
+</style>
