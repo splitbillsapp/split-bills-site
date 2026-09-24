@@ -5,20 +5,33 @@ import type { Locale } from '../i18n/locales';
 interface Props {
   current: Locale;
   page: PageId;
+  /** `compact` is the header's initials sticker; `full` adds the language's name. */
+  variant?: 'compact' | 'full';
+  /** Which way the menu opens; the footer opens upward. */
+  opens?: 'down' | 'up';
 }
 
-const { current, page } = Astro.props;
+const { current, page, variant = 'compact', opens = 'down' } = Astro.props;
 const t = dictionary(current.code);
 const others = localesFor('home').filter((locale) => locale.code !== current.code);
 ---
 
 {
   others.length > 0 && (
-    <details class="switcher">
+    <details class:list={['switcher', variant, `opens-${opens}`]}>
       <summary>
         <span class="visually-hidden">{t.nav.language}: </span>
         <span class="chip sticker-press" lang={current.code}>{current.short}</span>
-        <span class="visually-hidden" lang={current.code}>{current.label}</span>
+        <span class:list={['name', { 'visually-hidden': variant === 'compact' }]} lang={current.code}>
+          {current.label}
+        </span>
+        {
+          variant === 'full' && (
+            <svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+              <path d="M3 6l5 5 5-5" />
+            </svg>
+          )
+        }
       </summary>
       <ul class="menu">
         {others.map((locale) => (
@@ -37,6 +50,7 @@ const others = localesFor('home').filter((locale) => locale.code !== current.cod
 <style>
   .switcher {
     position: relative;
+    width: fit-content;
   }
 
   /* The sticker is 36px; the padding keeps the tap target at 44px. */
@@ -44,6 +58,7 @@ const others = localesFor('home').filter((locale) => locale.code !== current.cod
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: var(--space-md);
     min-width: 44px;
     min-height: 44px;
     padding: 4px;
@@ -88,19 +103,52 @@ const others = localesFor('home').filter((locale) => locale.code !== current.cod
     rotate: 0deg;
   }
 
+  .name {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .chevron {
+    fill: none;
+    stroke: var(--color-outline);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: rotate var(--duration-press) ease-out;
+  }
+
+  .switcher[open] .chevron {
+    rotate: 180deg;
+  }
+
+  .full summary {
+    padding-inline-end: var(--space-sm);
+  }
+
   .menu {
     position: absolute;
-    top: calc(100% + var(--space-xs));
     right: 0;
     z-index: 5;
     min-width: 13.5rem;
+    max-height: 60vh;
     margin: 0;
     padding: var(--space-sm);
+    overflow-y: auto;
     list-style: none;
     background: var(--color-surface);
     border: var(--keyline-base) solid var(--color-outline);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
+  }
+
+  .opens-down .menu {
+    top: calc(100% + var(--space-xs));
+  }
+
+  .opens-up .menu {
+    bottom: calc(100% + var(--space-xs));
+    right: auto;
+    left: 0;
   }
 
   .menu a {

@@ -1,5 +1,6 @@
 ---
-import { dictionary, fill, localesFor, pageHref, type PageId } from '../i18n';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { dictionary, fill, pageHref, type PageId } from '../i18n';
 import type { Locale } from '../i18n/locales';
 
 interface Props {
@@ -9,7 +10,6 @@ interface Props {
 
 const { locale, page } = Astro.props;
 const t = dictionary(locale.code);
-const languages = localesFor('home');
 ---
 
 <footer class="footer">
@@ -19,28 +19,7 @@ const languages = localesFor('home');
       <li><a href={pageHref('deleteAccount', locale)}>{t.footer.deleteAccount}</a></li>
       <li><a href={`mailto:${t.site.supportEmail}`}>{t.site.supportEmail}</a></li>
     </ul>
-    {
-      languages.length > 1 && (
-        <nav class="languages" aria-label={t.nav.language}>
-          <ul class="language-list">
-            {languages.map((candidate) => (
-              <li>
-                <a
-                  class:list={['language', { current: candidate.code === locale.code }]}
-                  href={pageHref(page, candidate)}
-                  lang={candidate.code}
-                  hreflang={candidate.code}
-                  aria-current={candidate.code === locale.code ? 'page' : undefined}
-                >
-                  <span class="chip" aria-hidden="true">{candidate.short}</span>
-                  {candidate.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )
-    }
+    <LanguageSwitcher current={locale} page={page} variant="full" opens="up" />
     <p class="made">{fill(t.footer.madeBy, { developer: t.site.developer })}</p>
   </div>
 </footer>
@@ -55,6 +34,7 @@ const languages = localesFor('home');
   .inner {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-md);
     padding-block: var(--space-xl) var(--space-xxl);
   }
@@ -78,54 +58,6 @@ const languages = localesFor('home');
 
   .links a:hover {
     text-decoration: underline;
-  }
-
-  .language-list {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: var(--space-xl);
-    row-gap: var(--space-xs);
-    padding: 0;
-    list-style: none;
-  }
-
-  .language {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    min-height: 44px;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  .language:hover {
-    text-decoration: underline;
-  }
-
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 30px;
-    height: 30px;
-    padding: 0 5px;
-    background: var(--color-surface);
-    border: var(--keyline-base) solid var(--color-outline);
-    border-radius: var(--radius-sm);
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 0.8125rem;
-    line-height: 1;
-    letter-spacing: 0.02em;
-  }
-
-  .current {
-    font-weight: 700;
-  }
-
-  .current .chip {
-    background: var(--color-text);
-    color: var(--color-on-ink);
   }
 
   .made {
