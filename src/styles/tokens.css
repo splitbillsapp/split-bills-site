@@ -1,0 +1,103 @@
+/*
+ * The Split Bills sticker book, as CSS custom properties. Values mirror
+ * src/ui/theme.ts in the app repo token for token; the oklch beside each colour
+ * is its source, so edit there and re-convert rather than nudging the hex.
+ */
+:root {
+  /* Grounds */
+  --color-background: #f7f0d9; /* oklch(0.955 0.032 95) */
+  --color-surface: #ffffff;
+  --color-surface-muted: #efebe1; /* oklch(0.94 0.014 90) */
+  --color-surface-sunken: #e1ded4; /* oklch(0.90 0.014 90) */
+
+  /* Ink ramp: hue 60, chroma 0.02 */
+  --color-text: #1b120b; /* oklch(0.19) */
+  --color-text-muted: #564b42; /* oklch(0.42) */
+  --color-text-faint: #72665e; /* oklch(0.52) */
+  --color-on-ink: #f6f2e3;
+
+  /* Keylines */
+  --color-outline: #1b120b;
+  --color-outline-soft: #7b6f66; /* oklch(0.55) */
+  --color-border: #e1ded4;
+
+  /* Accents, matched in lightness and chroma */
+  --color-accent: #f47c6e; /* oklch(0.72 0.15 28) coral */
+  --color-accent-ink: #af2b25; /* oklch(0.50 0.17 28) */
+  --color-info: #79a1fc; /* oklch(0.72 0.14 265) periwinkle */
+  --color-info-soft: #d8e8ff; /* oklch(0.93 0.05 265) */
+
+  /* Direction: type colours, then the fills behind them */
+  --color-positive: #17653c; /* oklch(0.45 0.10 155) */
+  --color-positive-fill: #7ce0a2; /* oklch(0.83 0.13 155) mint */
+  --color-positive-soft: #9ee8b8; /* oklch(0.87 0.10 155) */
+  --color-negative: #af2b25;
+  --color-negative-soft: #ffb8ac;
+
+  /* Disabled: always together, always dashed, never faded */
+  --color-disabled-fill: #ebe8df;
+  --color-disabled-outline: #90847a;
+  --color-disabled-text: #7b6f66;
+
+  /* Category tints: one lightness and chroma, hue apart */
+  --color-tint-apricot: #ffd3bb; /* oklch(0.91 0.07 45) */
+  --color-tint-butter: #faddad; /* oklch(0.91 0.07 80) */
+  --color-tint-sage: #c9edc1; /* oklch(0.91 0.07 140) */
+  --color-tint-sky: #abf1eb; /* oklch(0.91 0.07 190) */
+  --color-tint-blue: #b4eaff; /* oklch(0.91 0.07 235) */
+  --color-tint-periwinkle: #d3deff; /* oklch(0.91 0.07 275) */
+  --color-tint-lilac: #f3d4ff; /* oklch(0.91 0.07 315) */
+  --color-tint-rose: #ffcfe4; /* oklch(0.91 0.07 355) */
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-section: clamp(56px, 6vw, 96px);
+  --gutter: 16px;
+  --measure: 36rem;
+  --content-max: 72rem;
+
+  /* Geometry */
+  --radius-sm: 9px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-hero: 30px;
+  --keyline-thin: 2px;
+  --keyline-base: 2.5px;
+  --keyline-thick: 3px;
+  --keyline-hero: 3.5px;
+
+  /* Hard shadows: offset, no blur, always ink */
+  --shadow-sm: 3px 3px 0 var(--color-outline);
+  --shadow-md: 4px 4px 0 var(--color-outline);
+  --shadow-lg: 5px 5px 0 var(--color-outline);
+  --shadow-xl: 6px 6px 0 var(--color-outline);
+  --shadow-hero: 9px 9px 0 var(--color-outline);
+  --press-offset: 2px;
+
+  /* Tilts */
+  --tilt-left: -5deg;
+  --tilt-left-slight: -2.5deg;
+  --tilt-right: 4deg;
+  --tilt-right-slight: 2deg;
+
+  /* Type. --font-display and --font-body are emitted by Astro's fonts API. */
+  --text-caption: 0.8125rem;
+  --text-body: 1.0625rem;
+  --text-lede: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
+  --text-h3: 1.25rem;
+  --text-h2: clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem);
+  --text-h1: clamp(2.75rem, 1.75rem + 4.5vw, 5.25rem);
+  --leading-tight: 1;
+  --leading-heading: 1.08;
+  --leading-body: 1.5;
+  --leading-prose: 1.6;
+  --tracking-display: -0.02em;
+
+  --duration-press: 80ms;
+}

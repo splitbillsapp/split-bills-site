@@ -1,0 +1,64 @@
+---
+import { dictionary, fill, localizedPath } from '../i18n';
+import type { Locale } from '../i18n/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = dictionary(locale.code);
+---
+
+<footer class="footer">
+  <div class="container inner">
+    <ul class="links">
+      <li><a href={localizedPath(locale, 'privacy')}>{t.footer.privacy}</a></li>
+      <li><a href={localizedPath(locale, 'delete-account')}>{t.footer.deleteAccount}</a></li>
+      <li><a href={`mailto:${t.site.supportEmail}`}>{t.site.supportEmail}</a></li>
+    </ul>
+    <p class="made">{fill(t.footer.madeBy, { developer: t.site.developer })}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-block-start: var(--space-section);
+    background: var(--color-surface);
+    border-top: var(--keyline-thick) solid var(--color-outline);
+  }
+
+  .inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-block: var(--space-xl) var(--space-xxl);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--space-xl);
+    row-gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .links a:hover {
+    text-decoration: underline;
+  }
+
+  .made {
+    color: var(--color-text-muted);
+    font-size: var(--text-caption);
+    font-weight: 500;
+  }
+</style>

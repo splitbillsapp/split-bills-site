@@ -1,0 +1,76 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import Mark from './Mark.astro';
+import { dictionary, localizedPath } from '../i18n';
+import type { Locale } from '../i18n/locales';
+
+interface Props {
+  locale: Locale;
+  page: string;
+  availableIn: readonly Locale[];
+}
+
+const { locale, page, availableIn } = Astro.props;
+const t = dictionary(locale.code);
+---
+
+<header class="header">
+  <div class="container bar">
+    <a class="home" href={localizedPath(locale)} aria-label={`${t.site.name}: ${t.nav.home}`}>
+      <Mark size={40} />
+      <span class="display name">{t.site.name}</span>
+    </a>
+    <nav class="nav" aria-label={t.site.name}>
+      <a class="link" href={localizedPath(locale, 'privacy')}>{t.nav.privacy}</a>
+      <LanguageSwitcher current={locale} page={page} availableIn={availableIn} />
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    background: var(--color-surface);
+    border-bottom: var(--keyline-thick) solid var(--color-outline);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    min-height: 68px;
+    padding-block: var(--space-sm);
+  }
+
+  .home {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-md);
+    min-height: 44px;
+    text-decoration: none;
+  }
+
+  .name {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--space-xs);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+</style>

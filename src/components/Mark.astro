@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+
+import icon from '../assets/icon-512.png';
+
+interface Props {
+  size: number;
+}
+
+const { size } = Astro.props;
+---
+
+<Image
+  src={icon}
+  alt=""
+  width={size}
+  height={size}
+  densities={[2, 3]}
+  format="webp"
+  loading="eager"
+/>

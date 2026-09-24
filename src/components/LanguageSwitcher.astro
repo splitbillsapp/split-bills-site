@@ -1,0 +1,59 @@
+---
+import { dictionary, localizedPath } from '../i18n';
+import type { Locale } from '../i18n/locales';
+
+interface Props {
+  current: Locale;
+  page: string;
+  availableIn: readonly Locale[];
+}
+
+const { current, page, availableIn } = Astro.props;
+const t = dictionary(current.code);
+const others = availableIn.filter((locale) => locale.code !== current.code);
+---
+
+{
+  others.length > 0 && (
+    <nav class="switcher" aria-label={t.nav.language}>
+      <ul class="list">
+        {others.map((locale) => (
+          <li>
+            <a
+              class="option sticker-press"
+              href={localizedPath(locale, page)}
+              lang={locale.code}
+              hreflang={locale.code}
+            >
+              {locale.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  .list {
+    display: flex;
+    gap: var(--space-sm);
+    list-style: none;
+    padding: 0;
+  }
+
+  .option {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-md);
+    background: var(--color-surface);
+    border: var(--keyline-base) solid var(--color-outline);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+</style>
