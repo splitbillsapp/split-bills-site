@@ -26,12 +26,13 @@ const languages = localesFor('home');
             {languages.map((candidate) => (
               <li>
                 <a
-                  class:list={['language', 'sticker-press', { current: candidate.code === locale.code }]}
+                  class:list={['language', { current: candidate.code === locale.code }]}
                   href={pageHref(page, candidate)}
                   lang={candidate.code}
                   hreflang={candidate.code}
                   aria-current={candidate.code === locale.code ? 'page' : undefined}
                 >
+                  <span class="chip" aria-hidden="true">{candidate.short}</span>
                   {candidate.label}
                 </a>
               </li>
@@ -82,31 +83,49 @@ const languages = localesFor('home');
   .language-list {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-md);
-    padding: var(--space-xs) 0;
+    column-gap: var(--space-xl);
+    row-gap: var(--space-xs);
+    padding: 0;
     list-style: none;
   }
 
   .language {
     display: inline-flex;
     align-items: center;
+    gap: var(--space-sm);
     min-height: 44px;
-    padding: 0 var(--space-lg);
-    background: var(--color-surface);
-    border: var(--keyline-base) solid var(--color-outline);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 0.9375rem;
+    font-weight: 500;
     text-decoration: none;
   }
 
+  .language:hover {
+    text-decoration: underline;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 30px;
+    padding: 0 5px;
+    background: var(--color-surface);
+    border: var(--keyline-base) solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.8125rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
   .current {
+    font-weight: 700;
+  }
+
+  .current .chip {
     background: var(--color-text);
     color: var(--color-on-ink);
-    box-shadow: none;
-    transform: translate(var(--press-offset), var(--press-offset));
   }
 
   .made {
