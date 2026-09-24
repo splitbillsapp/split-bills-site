@@ -15,17 +15,16 @@ const others = localesFor('home').filter((locale) => locale.code !== current.cod
 {
   others.length > 0 && (
     <details class="switcher">
-      <summary class="sticker-press">
+      <summary>
         <span class="visually-hidden">{t.nav.language}: </span>
-        <span lang={current.code}>{current.label}</span>
-        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-          <path d="M3 6l5 5 5-5" />
-        </svg>
+        <span class="chip sticker-press" lang={current.code}>{current.short}</span>
+        <span class="visually-hidden" lang={current.code}>{current.label}</span>
       </summary>
       <ul class="menu">
         {others.map((locale) => (
           <li>
             <a href={pageHref(page, locale)} lang={locale.code} hreflang={locale.code}>
+              <span class="chip small" aria-hidden="true">{locale.short}</span>
               {locale.label}
             </a>
           </li>
@@ -40,21 +39,15 @@ const others = localesFor('home').filter((locale) => locale.code !== current.cod
     position: relative;
   }
 
+  /* The sticker is 36px; the padding keeps the tap target at 44px. */
   summary {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-sm);
+    justify-content: center;
+    min-width: 44px;
     min-height: 44px;
-    padding: 0 var(--space-md);
-    background: var(--color-surface);
-    border: var(--keyline-base) solid var(--color-outline);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 0.9375rem;
+    padding: 4px;
     list-style: none;
-    white-space: nowrap;
     cursor: pointer;
     user-select: none;
   }
@@ -63,25 +56,44 @@ const others = localesFor('home').filter((locale) => locale.code !== current.cod
     display: none;
   }
 
-  summary svg {
-    fill: none;
-    stroke: var(--color-outline);
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: rotate var(--duration-press) ease-out;
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 6px;
+    background: var(--color-surface);
+    border: var(--keyline-base) solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.875rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    rotate: var(--tilt-left-slight);
   }
 
-  .switcher[open] summary svg {
-    rotate: 180deg;
+  .switcher[open] summary .chip {
+    box-shadow: none;
+    translate: var(--press-offset) var(--press-offset);
+  }
+
+  .chip.small {
+    min-width: 30px;
+    height: 30px;
+    box-shadow: none;
+    font-size: 0.8125rem;
+    rotate: 0deg;
   }
 
   .menu {
     position: absolute;
-    top: calc(100% + var(--space-sm));
+    top: calc(100% + var(--space-xs));
     right: 0;
     z-index: 5;
-    min-width: 12rem;
+    min-width: 13.5rem;
     margin: 0;
     padding: var(--space-sm);
     list-style: none;
@@ -94,8 +106,9 @@ const others = localesFor('home').filter((locale) => locale.code !== current.cod
   .menu a {
     display: flex;
     align-items: center;
+    gap: var(--space-md);
     min-height: 44px;
-    padding: 0 var(--space-md);
+    padding: 0 var(--space-sm);
     border-radius: var(--radius-sm);
     font-weight: 700;
     text-decoration: none;
