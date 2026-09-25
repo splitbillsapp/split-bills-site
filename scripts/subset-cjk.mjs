@@ -36,7 +36,6 @@ function displayStrings(t) {
     t.store.comingSoon,
     t.store.getIt,
     t.notFound.heading,
-    t.home.ways.heading,
     t.home.features.heading,
     ...t.home.features.items.map((item) => item.title),
     ...t.home.hero.records.flatMap((record) => [record.title, record.amount, record.outcome]),

@@ -4,8 +4,7 @@ export const en: Dictionary = {
   site: {
     name: 'Split Bills',
     tagline: 'Who owes whom, and why.',
-    description:
-      'Split Bills keeps the small debts between friends on your phone. Every balance shows the records behind it.',
+    description: "Split Bills: Track shared meals, tickets, and trips. Every balance shows the expenses and repayments behind it.",
     developer: 'Andrew Sze-To',
     supportEmail: 'support@splitbillsapp.com',
   },
@@ -40,7 +39,8 @@ export const en: Dictionary = {
     home: 'Go to the home page',
   },
   home: {
-    lede: 'Small debts between friends, written down. Every balance shows the records behind it.',
+    lede: "Track shared meals, tickets, and trips. Every balance shows the expenses and repayments behind it.",
+    reassurance: "No account required. No ads.",
     hero: {
       label: 'A balance and the records behind it',
       screenAlt:
@@ -66,53 +66,22 @@ export const en: Dictionary = {
         },
       ],
     },
-    ways: {
-      heading: 'Two ways in, both fast',
-      body: 'Add IOU is one person, one number. Split a bill is the full form.',
-      screenAlt: 'New expense: four people chosen, HK$900.00 in the dock, split equally, paid by you',
-    },
     features: {
-      heading: 'What it does',
+      heading: "Keep track, from the first IOU to the last repayment",
+      screenAlt: 'New expense: four people chosen, HK$900.00 in the dock, split equally, paid by you',
       items: [
-        {
-          id: 'split',
-          title: 'Four ways to split',
-          body: 'Equal, percentage, weights or exact. Any number of payers.',
-        },
-        {
-          id: 'trace',
-          title: 'Balances you can trace',
-          body: 'Tap a person. See every record behind the figure.',
-        },
-        {
-          id: 'settle',
-          title: 'Settle up in one tap',
-          body: "Full amount and today's date, already filled in.",
-        },
-        {
-          id: 'nudge',
-          title: 'Nudge in your own voice',
-          body: 'Edit the reminder and send it yourself. The app never messages anyone.',
-        },
-        { id: 'calendar', title: 'Groups, categories, a calendar' },
-        { id: 'currency', title: 'Twenty currencies, never mixed' },
+        { id: 'split', title: "A quick IOU or a group bill", body: "Add an IOU for one person, or split a bill equally, by percentage, by shares, or by exact amounts. Multiple people can pay. Balances stay separate for each currency." },
+        { id: 'settle', title: "Record repayments in seconds", body: "The full balance and today’s date are filled in. Record the repayment when you’ve been paid." },
+        { id: 'nudge', title: "Reminders in your own words", body: "Edit your reminder, then choose when and where to send it. The app never messages anyone for you." },
       ],
     },
-    screens: {
-      label: 'More screens',
-      alts: {
-        split: 'Percentage split with sliders and an allocation bar',
-        settle: 'The settle-up sheet with the full amount pre-filled',
-        calendar: 'Calendar month with per-day markers and a day agenda',
-      },
-    },
     privacy: {
-      heading: 'Nothing leaves your phone.',
-      body: 'No analytics, no ads, no tracking, no contact access. Sign in only if you want a backup.',
+      heading: "On your phone. Backed up only if you choose.",
+      body: "Use it without an account. Sign in for backup. No ads, analytics, tracking, or contact access.",
       link: 'Read the privacy policy',
     },
     cta: {
-      heading: 'Write it down.',
+      heading: "Stop keeping it all in your head.",
     },
   },
 };

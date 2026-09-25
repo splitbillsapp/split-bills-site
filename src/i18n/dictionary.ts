@@ -2,7 +2,7 @@
  * The shape every locale must fill. Keys name the meaning of a string, never
  * its phrasing, so each locale can choose its own register.
  */
-export type FeatureId = 'split' | 'trace' | 'settle' | 'nudge' | 'calendar' | 'currency';
+export type FeatureId = 'split' | 'settle' | 'nudge';
 
 export type Direction = 'owedToYou' | 'youOwe';
 
@@ -41,23 +41,16 @@ export interface Dictionary {
   };
   home: {
     lede: string;
+    reassurance: string;
     hero: {
       label: string;
       screenAlt: string;
       records: { title: string; amount: string; outcome: string; direction: Direction }[];
     };
-    ways: {
-      heading: string;
-      body: string;
-      screenAlt: string;
-    };
     features: {
       heading: string;
+      screenAlt: string;
       items: { id: FeatureId; title: string; body?: string }[];
-    };
-    screens: {
-      label: string;
-      alts: { split: string; settle: string; calendar: string };
     };
     privacy: {
       heading: string;

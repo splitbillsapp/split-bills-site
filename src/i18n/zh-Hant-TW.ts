@@ -8,7 +8,7 @@ export const zhHantTW: Dictionary = {
   site: {
     name: 'Split Bills',
     tagline: '誰欠誰，為什麼。',
-    description: 'Split Bills 把朋友之間的小額欠款記在你的手機裡。每筆餘額都列出背後的紀錄。',
+    description: "Split Bills: 記下聚餐、票券和旅行的共同開銷。每筆餘額都列出背後的支出與還款紀錄。",
     developer: 'Andrew Sze-To',
     supportEmail: 'support@splitbillsapp.com',
   },
@@ -42,7 +42,8 @@ export const zhHantTW: Dictionary = {
     home: '回到首頁',
   },
   home: {
-    lede: '朋友之間的小額欠款，記下來。每筆餘額都列出背後的紀錄。',
+    lede: "記下聚餐、票券和旅行的共同開銷。每筆餘額都列出背後的支出與還款紀錄。",
+    reassurance: "不需帳號。沒有廣告。",
     hero: {
       label: '一筆餘額，以及背後的紀錄',
       screenAlt:
@@ -68,53 +69,22 @@ export const zhHantTW: Dictionary = {
         },
       ],
     },
-    ways: {
-      heading: '兩種記法，都很快',
-      body: '「新增欠款」是一個人、一個數字。「分帳」是完整表單。',
-      screenAlt: '新增支出：選了四個人，底欄是 HK$900.00，平均分攤，由你付款',
-    },
     features: {
-      heading: '有什麼功能',
+      heading: "從記下欠款，到收到還款",
+      screenAlt: '新增支出：選了四個人，底欄是 HK$900.00，平均分攤，由你付款',
       items: [
-        {
-          id: 'split',
-          title: '四種分法',
-          body: '平均、百分比、權重或指定金額。付款人不限一人。',
-        },
-        {
-          id: 'trace',
-          title: '餘額有跡可循',
-          body: '點一個人，看見背後每筆紀錄。',
-        },
-        {
-          id: 'settle',
-          title: '一鍵結清',
-          body: '全額和今天的日期，都已填好。',
-        },
-        {
-          id: 'nudge',
-          title: '用你自己的話提醒',
-          body: '改好提醒訊息，自己傳出去。App 不會替你聯絡任何人。',
-        },
-        { id: 'calendar', title: '群組、分類、月曆' },
-        { id: 'currency', title: '二十種貨幣，絕不混算' },
+        { id: 'split', title: "一筆欠款，或一群人分帳", body: "記下與一個人的欠款，或依平均、百分比、份數或指定金額分帳。支援多人付款，各種幣別的餘額分開計算。" },
+        { id: 'settle', title: "輕鬆記錄還款", body: "全額和今天的日期都已填好。收到款項後，就能記錄還款。" },
+        { id: 'nudge', title: "用你自己的話提醒", body: "編輯提醒訊息，自行決定何時、透過哪個 App 傳送。App 不會替你聯絡任何人。" },
       ],
     },
-    screens: {
-      label: '更多畫面',
-      alts: {
-        split: '百分比分帳，附滑桿與分配條',
-        settle: '結清面板，已填好全額',
-        calendar: '月曆檢視，每日有標記，下方是當日行程',
-      },
-    },
     privacy: {
-      heading: '什麼都不會離開你的手機。',
-      body: '沒有分析、沒有廣告、沒有追蹤、不讀取聯絡人。只有想備份時才需要登入。',
+      heading: "存在手機，備份由你決定。",
+      body: "不需帳號就能使用。想備份時再登入。沒有廣告、分析或追蹤，也不讀取聯絡人。",
       link: '閱讀隱私權政策',
     },
     cta: {
-      heading: '記下來。',
+      heading: "記下來，不用全靠記憶。",
     },
   },
 };

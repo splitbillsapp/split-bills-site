@@ -1,11 +1,7 @@
 ---
-import calendar from '../assets/screens/calendar.png';
 import entry from '../assets/screens/entry.png';
 import person from '../assets/screens/person.png';
-import settle from '../assets/screens/settle.png';
-import split from '../assets/screens/split.png';
 import FeatureCard from './FeatureCard.astro';
-import Mark from './Mark.astro';
 import PhoneFrame from './PhoneFrame.astro';
 import RecordSticker from './RecordSticker.astro';
 import StoreBadge from './StoreBadge.astro';
@@ -19,7 +15,6 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = dictionary(locale.code);
-const stripSizes = '(min-width: 60em) 240px, 30vw';
 ---
 
 <Site title={`${t.site.name}: ${t.site.tagline}`} description={t.site.description} page="home">
@@ -27,6 +22,7 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
     <div class="hero-copy">
       <h1>{t.site.tagline}</h1>
       <p class="lede">{t.home.lede}</p>
+      <p class="reassurance">{t.home.reassurance}</p>
       <StoreBadge locale={locale.code} />
     </div>
     <figure class="hero-visual" aria-label={t.home.hero.label}>
@@ -49,57 +45,22 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
     </figure>
   </section>
 
-  <section class="container ways">
-    <div class="ways-copy">
-      <h2>{t.home.ways.heading}</h2>
-      <p>{t.home.ways.body}</p>
-    </div>
-    <PhoneFrame
-      class="ways-phone"
-      screen={entry}
-      alt={t.home.ways.screenAlt}
-      widths={[220, 280]}
-      sizes="(min-width: 60em) 280px, 220px"
-      tilt="right-slight"
-      shadow="xl"
-    />
-  </section>
-
   <section class="container features">
     <h2>{t.home.features.heading}</h2>
-    <ul class="feature-list">
-      {t.home.features.items.map((item) => <FeatureCard {...item} />)}
-    </ul>
-  </section>
-
-  <section class="container strip" aria-label={t.home.screens.label}>
-    <PhoneFrame
-      screen={split}
-      alt={t.home.screens.alts.split}
-      widths={[110, 160, 240]}
-      sizes={stripSizes}
-      tilt="left-slight"
-      shadow="md"
-      radius="lg"
-    />
-    <PhoneFrame
-      class="strip-middle"
-      screen={settle}
-      alt={t.home.screens.alts.settle}
-      widths={[110, 160, 240]}
-      sizes={stripSizes}
-      shadow="md"
-      radius="lg"
-    />
-    <PhoneFrame
-      screen={calendar}
-      alt={t.home.screens.alts.calendar}
-      widths={[110, 160, 240]}
-      sizes={stripSizes}
-      tilt="right-slight"
-      shadow="md"
-      radius="lg"
-    />
+    <div class="benefits">
+      <ul class="feature-list">
+        {t.home.features.items.map((item) => <FeatureCard {...item} />)}
+      </ul>
+      <PhoneFrame
+        class="entry-phone"
+        screen={entry}
+        alt={t.home.features.screenAlt}
+        widths={[260, 320, 640]}
+        sizes="(min-width: 60em) 320px, 260px"
+        tilt="right-slight"
+        shadow="xl"
+      />
+    </div>
   </section>
 
   <section class="container">
@@ -112,7 +73,6 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
 
 
   <section class="container cta">
-    <Mark size={88} />
     <h2>{t.home.cta.heading}</h2>
     <StoreBadge locale={locale.code} size="lg" />
   </section>
@@ -211,46 +171,33 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
     }
   }
 
-  /* Two ways in */
-  .ways {
+  .reassurance {
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+
+  .features h2 {
+    max-width: 24ch;
+  }
+
+  .benefits {
     display: grid;
-    gap: var(--space-xl);
+    gap: var(--space-xxl);
+    align-items: start;
   }
 
-  .ways-copy p {
-    max-width: 36ch;
-    font-size: var(--text-lede);
-  }
-
-  .ways :global(.ways-phone) {
-    width: 220px;
-    justify-self: center;
-    margin-block: var(--space-lg);
-  }
-
-  /* Features */
   .feature-list {
     display: grid;
     gap: var(--space-lg);
     list-style: none;
     padding: 0;
+    margin: 0;
   }
 
-  /* Screens strip */
-  .strip {
-    display: flex;
-    gap: var(--space-lg);
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .strip > :global(*) {
-    flex: 0 1 240px;
-    min-width: 0;
-  }
-
-  .strip :global(.strip-middle) {
-    margin-block-start: var(--space-lg);
+  .benefits :global(.entry-phone) {
+    width: 260px;
+    max-width: 100%;
+    justify-self: center;
   }
 
   /* Privacy */
@@ -311,24 +258,13 @@ const stripSizes = '(min-width: 60em) 240px, 30vw';
       justify-self: end;
     }
 
-    .ways {
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-      gap: var(--space-section);
-    }
-
-    .ways :global(.ways-phone) {
-      width: 280px;
-      margin-block: 0;
-    }
-
-    .feature-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--space-xl);
-    }
-
-    .strip {
+    .benefits {
+      grid-template-columns: minmax(0, 1fr) 320px;
       gap: var(--space-xxl);
+    }
+
+    .benefits :global(.entry-phone) {
+      width: 320px;
     }
 
     .privacy {
